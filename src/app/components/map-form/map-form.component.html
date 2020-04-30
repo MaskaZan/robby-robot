@@ -1,0 +1,84 @@
+<form
+  class="fields-map-form"
+  [formGroup]="form"
+>
+  <div class="fields-map-form__range-fields">
+    <label>
+      Size: {{form.value.size}}
+      <input
+        class="fields-map-form__range"
+        type="range"
+        formControlName="size"
+        min="2"
+        max="25"
+      >
+    </label>
+    <label>
+      Power: {{form.value.power}}
+      <input
+        class="fields-map-form__range"
+        type="range"
+        formControlName="power"
+        min="3"
+        max="100"
+      >
+    </label>
+  </div>
+  <div class="fields-map-form__map-wrap">
+    <app-map
+      formControlName="map"
+      [disabledCells]="['S', 'T']"
+      [setCellHook]="setCellHook"
+      [target]="form.value.target"
+      (mouseenter)="mapHover = true"
+      (mouseleave)="mapHover = false"
+      (mousewheel)="selectTarget($event)"
+    >
+      <svg
+        [style.gridRowStart]="2"
+        [style.gridRowEnd]="form.value.map.length"
+        [style.gridColumnStart]="2"
+        [style.gridColumnEnd]="form.value.map.length"
+        [attr.viewBox]="getMapViewBox()"
+      >
+        <ng-container
+          *ngIf="bfsWorker.stream$ | async as bfsResult"
+        >
+          <polyline
+            class="fields-map-form__path"
+            *ngIf="bfsResult.passed"
+            [attr.points]="bfsResult | bfsPoints:form.value.power"
+          ></polyline>
+        </ng-container>
+        <ng-container
+          *ngIf="hoverBFSWorker.stream$ | async as bfsResult"
+        >
+          <polyline
+            class="fields-map-form__path fields-map-form__path_hover"
+            *ngIf="bfsResult.passed && mapHover"
+            [attr.points]="bfsResult | bfsPoints:form.value.power"
+          ></polyline>
+        </ng-container>
+      </svg>
+      <div
+        class="fields-map-form__unit fields-map-form__unit_start"
+        [style.gridRow]="start.y + 1"
+        [style.gridColumn]="start.x + 1"
+      ></div>
+      <div
+        class="fields-map-form__unit fields-map-form__unit_target"
+        [style.gridRow]="target.y + 1"
+        [style.gridColumn]="target.x + 1"
+      ></div>
+    </app-map>
+  </div>
+  <div
+    class="fields-map-form__target"
+    (mousewheel)="selectTarget($event)"
+  >
+    <input type="radio" value="S" formControlName="target">
+    <input type="radio" value="T" formControlName="target">
+    <input type="radio" value="." formControlName="target">
+    <input type="radio" value="#" formControlName="target">
+  </div>
+</form>

@@ -58,6 +58,35 @@
             }
           }
         },
+        "build-worker": {
+          "builder": "@angular-builders/custom-webpack:server",
+          "options": {
+            "customWebpackConfig": {
+              "path": "./webpack.worker.config.js",
+              "mergeStrategies": {
+                "externals": "append"
+              }
+            },
+            "outputPath": "src/assets/workers",
+            "main": "src/app/workers/bfs.worker/worker.ts",
+            "tsConfig": "src/app/workers/tsconfig.worker.json"
+          }
+        },
+        "serve-worker": {
+          "builder": "@angular-builders/custom-webpack:server",
+          "options": {
+            "customWebpackConfig": {
+              "path": "./webpack.worker.config.js",
+              "mergeStrategies": {
+                "externals": "append"
+              }
+            },
+            "outputPath": "src/assets/workers",
+            "main": "src/app/workers/bfs.worker/worker.ts",
+            "tsConfig": "src/app/workers/tsconfig.worker.json",
+            "watch": true
+          }
+        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {

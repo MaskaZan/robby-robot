@@ -1,0 +1,34 @@
+<div class="map">
+  <div
+    class="map__grid"
+    [ngStyle]="{
+      gridTemplateColumns: 'repeat(' + cells.length + ',1fr)',
+      gridTemplateRows: 'repeat(' + cells.length + ',1fr)'
+    }"
+  >
+    <div
+      class="map__cell"
+      *ngFor="let value of cells | flat; index as i; trackBy: trackByIndex"
+      (click)="setCell(i)"
+      (mouseenter)="setVailIndex(i, value)"
+      (mouseleave)="setVailIndex(-1)"
+    >
+      <div
+        class="map__cell-value"
+        [attr.type]="value"
+      ></div>
+      <div
+        class="map__cell-vail"
+        [attr.type]="target"
+        [@vailStatus]
+        *ngIf="i === vailIndex"
+      ></div>
+    </div>
+  </div>
+  <div class="map__grid map__grid_content-layer" [ngStyle]="{
+    gridTemplateColumns: 'repeat(' + cells.length + ',1fr)',
+    gridTemplateRows: 'repeat(' + cells.length + ',1fr)'
+  }">
+    <ng-content></ng-content>
+  </div>
+</div>

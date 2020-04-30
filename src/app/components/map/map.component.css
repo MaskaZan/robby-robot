@@ -1,0 +1,74 @@
+.map {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/bg.png');
+  background-size: 200px;
+  border-radius: 7px;
+  box-sizing: border-box;
+  padding: 7px;
+}
+
+.map__grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-gap: 4px;
+}
+
+.map__grid_content-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  padding: 7px;
+  box-sizing: border-box;
+}
+
+.map__cell {
+  position: relative;
+}
+
+.map__cell-value,
+.map__cell-vail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.map__cell-vail {
+  opacity: 0.5;
+}
+
+.map__cell-value,
+.map__cell-vail {
+  background-image: url('../../assets/floor.png');
+  background-size: 128px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.map__cell-value[type='#'],
+.map__cell-vail[type='#'] {
+  background-image: url('../../assets/box.png');
+  background-size: cover;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.map__cell-vail[type='S'] {
+  background-image: url('../../assets/robot.png');
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.map__cell-vail[type='T'] {
+  background-image: url('../../assets/microchip.png');
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
